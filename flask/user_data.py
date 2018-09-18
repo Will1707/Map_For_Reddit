@@ -4,8 +4,7 @@ from geojson import FeatureCollection
 from pymongo import MongoClient
 from datetime import datetime
 
-client = MongoClient()
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
 submission = client['earthporn'].post
 data = client['geojson'].featurecollection
 user_dict = {}
