@@ -125,7 +125,7 @@ function closeNav() {
   var sidebar = document.getElementById("userform");
   if (sidebar.style.display === "none") {
       sidebar.style.display = "initial";
-      document.getElementById("openclose").style.marginLeft = "260px";
+      document.getElementById("openclose").style.marginLeft = "226px";
       document.getElementById("openclose").style.width = "22px";
       document.getElementById("rightArrow").style.display = "none";
       document.getElementById("leftArrow").style.display = "block";
@@ -145,7 +145,7 @@ function closeNav() {
 function openNav() {
   document.getElementById("userform").style.display = "initial";
   // $("userform").toggle();
-  document.getElementById("openclose").style.marginLeft = "260px";
+  document.getElementById("openclose").style.marginLeft = "226px";
   document.getElementById("openclose").style.boxSizing = "border-box";
 }
 
