@@ -4,10 +4,6 @@ from flask import render_template, request, jsonify
 from user_data import user_data
 from pymongo import MongoClient
 
-client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
-db = client['earthporn']
-submissions = db.location
-
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -28,7 +24,10 @@ def hello_world():
 
 @app.route('/api/v0.1/reddit_id', methods=['GET'])
 def api_id():
-
+    client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
+    db = client['earthporn']
+    submissions = db.location
+    
     if 'id' in request.args:
         id = request.args['id']
     else:
@@ -51,6 +50,7 @@ def api_id():
             "pie_chart": post['user_posts'][id]['pie_chart'],
             "subreddit": post['subreddit']
         }
+    client.close()
     return jsonify(results)
 
 if __name__ == '__main__':
