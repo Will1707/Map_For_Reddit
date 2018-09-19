@@ -400,10 +400,10 @@
         });
         markerCluster.addMarker(marker);
         google.maps.event.addListener(marker, 'click', function(){
-            infowindow.close(); //'" + loc['properties']['image_link'] + "'
+            infowindow.close();
             infowindow.setContent("<div class='infowindow_body' style='box-sizing: border-box; color: black;'>" +
                                   "<p><a style='text-decoration:none; color: black;' href='https://www.reddit.com/r/earthporn/" + loc['id'] + "'><div style='text-align: center; font-weight: bold; font-size: 16px;'>"  +
-                                  loc['properties']['title'] + "</p></div></a> <div style='float:center'><img src='http://imgur.com/fIdt7Frm.jpg' style='max-width: 250px;'></div>" +
+                                  loc['properties']['title'] + "</p></div></a> <div style='float:center'><img src='" + loc['properties']['image_link'] + "' style='max-width: 250px;'></div>" +
                                   "<div style='margin-top: 8px;'><p><a style='text-decoration:none; color: black; position: relative;' target='_blank' href='https://www.reddit.com/r/earthporn'> r/EarthPorn </a>" +
                                   "<a style='text-decoration:none; color: black; float: right;' target='_blank' href='https://www.reddit.com/u/" + loc['properties']['username'] + "'>" + loc['properties']['username'] + "</a></p></div>" +
                                   "<div style='margin-top: -10px;'><p><a style='text-decoration:none; color: black;' target='_blank' id='postScore' href='https://www.reddit.com/r/earthporn/" + loc['id'] + "'>" +
