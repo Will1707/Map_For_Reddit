@@ -42,7 +42,7 @@ def api_id():
             "extract": post['wiki_extract'],
             "title": post['wiki_title'],
             "reddit_title": post['user_posts'][id]['title'],
-            "reddit_image": post['user_posts'][id]['thumb_url'],
+            "reddit_image": post['user_posts'][id]['url'],
             "reddit_score": post['user_posts'][id]['score'],
             "reddit_user": post['user_posts'][id]['author'],
             "reddit_comments": post['user_posts'][id]['num_comments'],

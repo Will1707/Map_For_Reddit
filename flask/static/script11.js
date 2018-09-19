@@ -203,7 +203,7 @@ function getWikiExtract() {
         var redditLink     = "https://www.reddit.com/";
 
         document.getElementById("modalImageTitleLink").innerHTML      = data['reddit_title'];
-        document.getElementById("modalImageImage").src            = data['reddit_image'];
+        document.getElementById("modalImageImage").src                = data['reddit_image'];
         document.getElementById("modalImageSubLink").innerHTML        = data['subreddit'];
         document.getElementById("modalImageUserLink").innerHTML       = data['reddit_user'];
         document.getElementById("modalImageScoreLink").innerHTML      = data['reddit_score']    + ' points';
