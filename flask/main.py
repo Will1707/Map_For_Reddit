@@ -95,7 +95,7 @@ def api_id():
         "to_symbol": results['location_info']['currency']['symbol'],
         "flag": user_country['flag']
         }
-        date_time = datetime.now(pytz.timezone(results['location_info']['timezone']['name']))
+        date_time = datetime.now(time.time()) #pytz.timezone(results['location_info']['timezone']['name']))
         local_time = {
         "time": date_time.strftime('%H:%M'),
         "timezone": date_time.strftime('%Z')
