@@ -4,14 +4,14 @@ from geojson import FeatureCollection
 from pymongo import MongoClient
 from datetime import datetime
 
-client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
+# client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
+client = MongoClient('localhost', 27017)
 submission = client['earthporn'].post
 data = client['geojson'].featurecollection
 user_dict = {}
 
 def user_data(user_dict):
     feature_collection_list = []
-
     split_score = user_dict['score'].split(',')
     user_dict['score_upper'] = split_score[1]
     user_dict['score_lower'] = split_score[0]
@@ -29,7 +29,7 @@ def user_data(user_dict):
     user_dict['date_lower'] = date_lower_utc
     user_dict['id'] = ( 'S' + user_dict['score_upper'] + 's' + user_dict['score_lower'] +
                         'C' + user_dict['comments_upper'] + 'c' + user_dict['comments_lower'] +
-                        'D' + date_upper + 'd' + date_lower +
+                        'D' + date_upper + 'd' + date_lower + 'J' + user_dict['countries_no'] +
                         'G' + user_dict['cluster'] + 'R' + user_dict['results'] + 'N' + user_dict['num_country'])
 
     featurecollection = data.find({"id":user_dict['id']})
@@ -45,18 +45,19 @@ def user_data(user_dict):
                 'cluster': int(user_dict['cluster']),
                 'results': int(user_dict['results']),
                 'num_country': int(user_dict['num_country']),
+                'countries': user_dict['countries']
                 }
         if user_form['cluster'] == 0:
             found = submission.find({"geoJSON.properties.comments": {"$gt": user_form['comments_lower'], "$lt": user_form['comments_upper']},
                                     "geoJSON.properties.score": {"$gt": user_form['score_lower'], "$lt": user_form['score_upper']},
-                                    "geoJSON.properties.date": {"$gt": user_form['date_lower'], "$lt": user_form['date_upper']}}).sort("score", pymongo.DESCENDING)
+                                    "geoJSON.properties.date": {"$gt": user_form['date_lower'], "$lt": user_form['date_upper']},
+                                    "country": {"$in": user_form['countries']}}).sort("score", pymongo.DESCENDING)
         else:
             cluster = 'cluster.level_' + str(user_form['cluster'])
-            print(cluster)
             found = submission.find({"geoJSON.properties.comments": {"$gt": user_form['comments_lower'], "$lt": user_form['comments_upper']},
                                     "geoJSON.properties.score": {"$gt": user_form['score_lower'], "$lt": user_form['score_upper']},
                                     "geoJSON.properties.date": {"$gt": user_form['date_lower'], "$lt": user_form['date_upper']},
-                                    cluster: True}).sort("score", pymongo.DESCENDING)
+                                    "country": {"$in": user_form['countries']}, cluster: True}).sort("score", pymongo.DESCENDING)
 
         print(found.count(with_limit_and_skip=True))
         result = []
@@ -67,9 +68,9 @@ def user_data(user_dict):
             else:
                 remainder.append(loc['geoJSON'])
 
-        print(user_form['results'])
-        print("result:" + str(len(result)))
-        print("remainder:" + str(len(remainder)))
+        # print(user_form['results'])
+        # print("result:" + str(len(result)))
+        # print("remainder:" + str(len(remainder)))
 
         remaining = user_form['results'] - len(result)
         if remaining > 0:

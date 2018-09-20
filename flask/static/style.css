@@ -105,6 +105,11 @@ opacity: .7;
   margin-bottom: 7%;
 }
 
+.slider.slider-horizontal {
+    width: 180px; !important
+    height: 20px;
+}
+
 .slider-selection {
       background-image: linear-gradient(to bottom, #d6d5d5bd 0%, #d6d5d5 100%);
 }

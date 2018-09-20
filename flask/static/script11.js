@@ -174,16 +174,31 @@ function darkModeOn() {
 //   var minutes = d.getMinutes()
 //   document.getElementById("localTime").innerHTML = padNum(hours) + ':' + padNum(minutes);
 // }
+var ip;
+$.getJSON('http://api.ipstack.com/check?access_key=19c1afec565796258fa5b67088886265&format=1', function(data){
+  delete data.ip
+  delete data.type
+  ip = JSON.stringify(data)
+});
 
 function getWikiExtract() {
-  var apiURL = 'api/v0.1/reddit_id?id=' + document.getElementById("postScore").href.split("/")[5]
+
+  var apiURL = 'api/v0.1/reddit_id?id=' + document.getElementById("postScore").href.split("/")[5] + "&?ip=" + ip;
+  delete ip
   $.ajax({
     type: 'GET',
     url: apiURL,
     dataType: "JSON", // data type expected from server
     success: function (data) {
-      document.getElementById("wiki_extract").innerHTML = data['extract'];
       document.getElementById("wiki_title").innerHTML = data['title'];
+      document.getElementById("wiki_extract").innerHTML = data['extract'];
+      document.getElementById("wikipedia").href = "https://en.wikipedia.org/wiki/" + data['title'];
+      document.getElementById("placeName").innerHTML = data['location_info']['location_name'];
+      document.getElementById("toCurrency").innerHTML = data['currency']['to_symbol'] + data['currency']['conversion'].toFixed(2);
+      document.getElementById("fromCurrency").innerHTML = data['currency']['from_symbol'] + "1.00";
+      document.getElementById("localTime").innerHTML = data['local_time']['time'];
+      document.getElementById("weatherTemp").innerHTML = (data['weather']['main']['temp'] - 273.15).toFixed(0) + "&#176;C";
+      document.getElementById("weatherDesc").innerHTML = data['weather']['weather'][0]['description'];
     },
     error: function() {
       console.log('Error: ' + data);
@@ -198,7 +213,6 @@ function getWikiExtract() {
       url: apiURL,
       dataType: "JSON", // data type expected from server
       success: function (data) {
-        console.log(data)
         document.getElementById("modalRedditUser").innerHTML      = data['reddit_user'];
         var redditLink     = "https://www.reddit.com/";
 
