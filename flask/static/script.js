@@ -175,7 +175,7 @@ function darkModeOn() {
 //   document.getElementById("localTime").innerHTML = padNum(hours) + ':' + padNum(minutes);
 // }
 var ip;
-$.getJSON('http://api.ipstack.com/check?access_key=19c1afec565796258fa5b67088886265&format=1', function(data){
+$.getJSON('https://api.ipstack.com/check?access_key=19c1afec565796258fa5b67088886265&format=1', function(data){
   delete data.ip
   delete data.type
   console.log(data)
@@ -200,7 +200,7 @@ function getWikiExtract() {
       var lat = data['loc'][0].toString()
       var lng = data['loc'][1].toString()
       var weatherJSON;
-      $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=7986ad57675127ce999defef1beaa4dd", function(weather){
+      $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=7986ad57675127ce999defef1beaa4dd", function(weather){
         console.log(weather)
         document.getElementById("weatherTemp").innerHTML = (weather['main']['temp'] - 273.15).toFixed(0) + "&#176;C";
         document.getElementById("weatherDesc").innerHTML = weather['weather'][0]['description'];
