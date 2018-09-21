@@ -1,8 +1,6 @@
 # coding=utf-8
 import json
 import time
-import pytz
-import requests
 from datetime import datetime
 from flask import Flask, request
 from flask import render_template, request, jsonify
@@ -80,7 +78,6 @@ def api_id():
             'time': time.time(),
             'requested_id': args['id']
         }
-        # user_db.user.insert_one(insert)
         user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
         user_currency_code = user_country['currency']['iso_code']
         loc_currency_code  = results['location_info']['currency']['iso_code']
@@ -95,15 +92,9 @@ def api_id():
             "to_symbol": results['location_info']['currency']['symbol'],
             "flag": user_country['flag']
         }
-        date_time = datetime.now(pytz.timezone(results['location_info']['timezone']['name'])))
-        local_time = {
-            "time": date_time.strftime('%H:%M'),
-            "timezone": date_time.strftime('%Z')
-        }
-        s = requests.get(f"http://api.openweathermap.org/data/2.5/weather?lat={results['loc'][0]}&lon={results['loc'][1]}&APPID=7986ad57675127ce999defef1beaa4dd")
-        weather = json.loads(s.content)
-        results['weather'] = weather
-        results['local_time'] = local_time
+        local_time = time.time()
+        results['weather'] = f"http://api.openweathermap.org/data/2.5/weather?lat={results['loc'][0]}&lon={results['loc'][1]}&APPID=7986ad57675127ce999defef1beaa4dd"
+        results['local_time'] = time.strftime("%H:%M", time.gmtime(time.time()+results['location_info']['timezone']['offset_sec'])) 
         results['currency'] = currency
     except:
         pass
