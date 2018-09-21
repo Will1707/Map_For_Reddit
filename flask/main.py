@@ -67,7 +67,7 @@ def api_id():
         "pie_chart": post['user_posts'][args['id']]['pie_chart'],
         "subreddit": post['subreddit'],
         "loc": post['loc'],
-        "weather": = f"http://api.openweathermap.org/data/2.5/weather?lat={post['loc'][0]}&lon={post['loc'][1]}&APPID=7986ad57675127ce999defef1beaa4dd"
+        "weather": = "http://api.openweathermap.org/data/2.5/weather?lat=" + str(post['loc'][0]) + "&lon=" + str(post['loc'][1]) + "&APPID=7986ad57675127ce999defef1beaa4dd"
         "location_info": post['location_info']
     }
     try:
