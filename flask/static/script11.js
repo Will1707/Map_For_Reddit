@@ -294,6 +294,7 @@ function getWikiExtract() {
         document.getElementById(userLink).href        = redditLink + 'user/'  + data['reddit_user'];
         document.getElementById(scoreLink).href       = redditLink + 'r/'     + data['other_posts'][subreddit][i - 1]['subreddit'] + '/comments/' + data['other_posts']['earthporn'][i - 1]['id'];
         document.getElementById(commmentsLink).href   = redditLink + 'r/'     + data['other_posts'][subreddit][i - 1]['subreddit'] + '/comments/' + data['other_posts']['earthporn'][i - 1]['id'];
+      }
     },
     error: function() {
       console.log('Error: ' + data);
