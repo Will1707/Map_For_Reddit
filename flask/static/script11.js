@@ -190,6 +190,7 @@ function getWikiExtract() {
     url: apiURL,
     dataType: "JSON", // data type expected from server
     success: function (data) {
+      console.log(data)
       document.getElementById("wiki_title").innerHTML = data['title'];
       document.getElementById("wiki_extract").innerHTML = data['extract'];
       document.getElementById("wikipedia").href = "https://en.wikipedia.org/wiki/" + data['title'];

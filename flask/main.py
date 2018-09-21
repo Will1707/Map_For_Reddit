@@ -73,11 +73,11 @@ def api_id():
         }
     try:
         user = json.loads(args['?ip'])
-        insert = {
-            'user': user,
-            'time': time.time(),
-            'requested_id': args['id']
-        }
+        # insert = {
+        #     'user': user,
+        #     'time': time.time(),
+        #     'requested_id': args['id']
+        # }
         user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
         user_currency_code = user_country['currency']['iso_code']
         loc_currency_code  = results['location_info']['currency']['iso_code']
@@ -94,7 +94,7 @@ def api_id():
         }
         local_time = time.time()
         results['weather'] = f"http://api.openweathermap.org/data/2.5/weather?lat={results['loc'][0]}&lon={results['loc'][1]}&APPID=7986ad57675127ce999defef1beaa4dd"
-        results['local_time'] = time.strftime("%H:%M", time.gmtime(time.time()+results['location_info']['timezone']['offset_sec'])) 
+        results['local_time'] = time.strftime("%H:%M", time.gmtime(time.time()+results['location_info']['timezone']['offset_sec']))
         results['currency'] = currency
     except:
         pass
