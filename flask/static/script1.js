@@ -175,7 +175,8 @@ function darkModeOn() {
 //   document.getElementById("localTime").innerHTML = padNum(hours) + ':' + padNum(minutes);
 // }
 var ip;
-$.getJSON('https://api.ipstack.com/check?access_key=19c1afec565796258fa5b67088886265&format=1', function(data){
+// $.getJSON('https://api.ipstack.com/check?access_key=19c1afec565796258fa5b67088886265&format=1', function(data){
+$.getJSON('https://geoip.tools/v1/json', function(data){ 
   delete data.ip
   delete data.type
   console.log(data)
