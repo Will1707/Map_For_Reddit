@@ -71,6 +71,7 @@ def api_id():
     }
     try:
         user = json.loads(args['?ip'])
+        results['user'] = user
         user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
         user_currency_code = user_country['currency']['iso_code']
         results['user_currency_code'] = user_currency_code
