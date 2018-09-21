@@ -73,7 +73,9 @@ def api_id():
         user = json.loads(args['?ip'])
         user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
         user_currency_code = user_country['currency']['iso_code']
+        results['user_currency_code'] = user_currency_code
         loc_currency_code  = results['location_info']['currency']['iso_code']
+        results['loc_currency_code'] = loc_currency_code
         currency_db = user_db.currency.find_one()
         currency = {
             "conversion": round(currency_db['currency'][user_currency_code][loc_currency_code], 2),
