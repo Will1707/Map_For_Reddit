@@ -176,7 +176,7 @@ function darkModeOn() {
 // }
 var ip;
 // $.getJSON('https://api.ipstack.com/check?access_key=19c1afec565796258fa5b67088886265&format=1', function(data){
-$.getJSON('https://geoip.tools/v1/json', function(data){ 
+$.getJSON('https://geoip.tools/v1/json', function(data){
   delete data.ip
   delete data.type
   console.log(data)
@@ -206,8 +206,8 @@ function getWikiExtract() {
         document.getElementById("weatherTemp").innerHTML = (weather['main']['temp'] - 273.15).toFixed(0) + "&#176;C";
         document.getElementById("weatherDesc").innerHTML = weather['weather'][0]['description'];
       });
-      // document.getElementById("toCurrency").innerHTML = data['currency']['to_symbol'] + data['currency']['conversion'].toFixed(2);
-      // document.getElementById("fromCurrency").innerHTML = data['currency']['from_symbol'] + "1.00";
+      document.getElementById("toCurrency").innerHTML = data['currency']['to_symbol'] + data['currency']['conversion'].toFixed(2);
+      document.getElementById("fromCurrency").innerHTML = data['currency']['from_symbol'] + "1.00";
       document.getElementById("modalRedditUser").innerHTML      = data['reddit_user'];
       var redditLink     = "https://www.reddit.com/";
 
