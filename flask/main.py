@@ -73,29 +73,24 @@ def api_id():
         }
     try:
         user = json.loads(args['?ip'])
-        # insert = {
-        #     'user': user,
-        #     'time': time.time(),
-        #     'requested_id': args['id']
+        # user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
+        # user_currency_code = user_country['currency']['iso_code']
+        # loc_currency_code  = results['location_info']['currency']['iso_code']
+        # currency = user_db.currency.find_one()
+        # currency = {
+        #     "conversion": round(currency['currency'][user_currency_code][loc_currency_code], 2),
+        #     "from_html": user_country['currency']['html'],
+        #     "from_iso": user_country['currency']['iso_code'],
+        #     "from_symbol": user_country['currency']['symbol'],
+        #     "to_html": results['location_info']['currency']['html'],
+        #     "to_iso": results['location_info']['currency']['iso_code'],
+        #     "to_symbol": results['location_info']['currency']['symbol'],
+        #     "flag": user_country['flag']
         # }
-        user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
-        user_currency_code = user_country['currency']['iso_code']
-        loc_currency_code  = results['location_info']['currency']['iso_code']
-        currency = user_db.currency.find_one()
-        currency = {
-            "conversion": round(currency['currency'][user_currency_code][loc_currency_code], 2),
-            "from_html": user_country['currency']['html'],
-            "from_iso": user_country['currency']['iso_code'],
-            "from_symbol": user_country['currency']['symbol'],
-            "to_html": results['location_info']['currency']['html'],
-            "to_iso": results['location_info']['currency']['iso_code'],
-            "to_symbol": results['location_info']['currency']['symbol'],
-            "flag": user_country['flag']
-        }
-        local_time = time.time()
+        # local_time = time.time()
         results['weather'] = f"http://api.openweathermap.org/data/2.5/weather?lat={results['loc'][0]}&lon={results['loc'][1]}&APPID=7986ad57675127ce999defef1beaa4dd"
-        results['local_time'] = time.strftime("%H:%M", time.gmtime(time.time()+results['location_info']['timezone']['offset_sec']))
-        results['currency'] = currency
+        results['local_time'] =  time.strftime("%H:%M", time.gmtime(time.time()+results['location_info']['timezone']['offset_sec']))
+        results['currency'] = user
     except:
         pass
     client.close()
