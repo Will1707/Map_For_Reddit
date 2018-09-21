@@ -67,9 +67,9 @@ def api_id():
         "pie_chart": post['user_posts'][args['id']]['pie_chart'],
         "subreddit": post['subreddit'],
         "loc": post['loc'],
-        "weather": = "http://api.openweathermap.org/data/2.5/weather?lat=" + str(post['loc'][0]) + "&lon=" + str(post['loc'][1]) + "&APPID=7986ad57675127ce999defef1beaa4dd"
         "location_info": post['location_info']
     }
+    results["weather"]: = str("http://api.openweathermap.org/data/2.5/weather?lat=" + str(results['loc'][0]) + "&lon=" + str(results['loc'][1]) + "&APPID=7986ad57675127ce999defef1beaa4dd")
     try:
         user = json.loads(args['?ip'])
         user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
