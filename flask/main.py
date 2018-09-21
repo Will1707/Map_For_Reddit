@@ -53,44 +53,43 @@ def api_id():
     user_db = client['location']
     args = request.args.to_dict()
     find = 'user_posts.' + args['id'] + '.id'
-    found = submissions.find({find: args['id']})
-    urls = {}
-    for post in found:
-        results = {
-            "extract": post['wiki_extract'],
-            "title": post['wiki_title'],
-            "reddit_title": post['user_posts'][args['id']]['title'],
-            "reddit_image": post['user_posts'][args['id']]['url'],
-            "reddit_score": post['user_posts'][args['id']]['score'],
-            "reddit_user": post['user_posts'][args['id']]['author'],
-            "reddit_comments": post['user_posts'][args['id']]['num_comments'],
-            "id": args['id'],
-            "other_posts": post['user_posts'][args['id']]['user_content'],
-            "pie_chart": post['user_posts'][args['id']]['pie_chart'],
-            "subreddit": post['subreddit'],
-            "loc": post['loc'],
-            "location_info": post['location_info']
-        }
+    post = submissions.find_one({find: args['id']})
+    results = {
+        "extract": post['wiki_extract'],
+        "title": post['wiki_title'],
+        "reddit_title": post['user_posts'][args['id']]['title'],
+        "reddit_image": post['user_posts'][args['id']]['url'],
+        "reddit_score": post['user_posts'][args['id']]['score'],
+        "reddit_user": post['user_posts'][args['id']]['author'],
+        "reddit_comments": post['user_posts'][args['id']]['num_comments'],
+        "id": args['id'],
+        "other_posts": post['user_posts'][args['id']]['user_content'],
+        "pie_chart": post['user_posts'][args['id']]['pie_chart'],
+        "subreddit": post['subreddit'],
+        "loc": post['loc'],
+        "weather": = f"http://api.openweathermap.org/data/2.5/weather?lat={post['loc'][0]}&lon={post['loc'][1]}&APPID=7986ad57675127ce999defef1beaa4dd"
+        "location_info": post['location_info']
+    }
     try:
         user = json.loads(args['?ip'])
-        # user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
-        # user_currency_code = user_country['currency']['iso_code']
-        # loc_currency_code  = results['location_info']['currency']['iso_code']
-        # currency = user_db.currency.find_one()
-        # currency = {
-        #     "conversion": round(currency['currency'][user_currency_code][loc_currency_code], 2),
-        #     "from_html": user_country['currency']['html'],
-        #     "from_iso": user_country['currency']['iso_code'],
-        #     "from_symbol": user_country['currency']['symbol'],
-        #     "to_html": results['location_info']['currency']['html'],
-        #     "to_iso": results['location_info']['currency']['iso_code'],
-        #     "to_symbol": results['location_info']['currency']['symbol'],
-        #     "flag": user_country['flag']
-        # }
-        # local_time = time.time()
-        results['weather'] = f"http://api.openweathermap.org/data/2.5/weather?lat={results['loc'][0]}&lon={results['loc'][1]}&APPID=7986ad57675127ce999defef1beaa4dd"
+        user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
+        results['user_country'] = user_country
+        user_currency_code = user_country['currency']['iso_code']
+        loc_currency_code  = results['location_info']['currency']['iso_code']
+        currency_db = user_db.currency.find_one()
+        results['currency_db'] = currency_db
+        currency = {
+            "conversion": round(currency_db['currency'][user_currency_code][loc_currency_code], 2),
+            "from_html": user_country['currency']['html'],
+            "from_iso": user_country['currency']['iso_code'],
+            "from_symbol": user_country['currency']['symbol'],
+            "to_html": results['location_info']['currency']['html'],
+            "to_iso": results['location_info']['currency']['iso_code'],
+            "to_symbol": results['location_info']['currency']['symbol'],
+            "flag": user_country['flag']
+        }
         results['local_time'] =  time.strftime("%H:%M", time.gmtime(time.time()+results['location_info']['timezone']['offset_sec']))
-        results['currency'] = user
+        results['currency'] = currency
     except:
         pass
     client.close()

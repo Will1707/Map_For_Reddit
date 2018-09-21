@@ -178,6 +178,7 @@ var ip;
 $.getJSON('http://api.ipstack.com/check?access_key=19c1afec565796258fa5b67088886265&format=1', function(data){
   delete data.ip
   delete data.type
+  console.log(data)
   ip = JSON.stringify(data)
 });
 
