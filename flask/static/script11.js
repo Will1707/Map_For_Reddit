@@ -199,8 +199,10 @@ function getWikiExtract() {
       document.getElementById("toCurrency").innerHTML = data['currency']['to_symbol'] + data['currency']['conversion'].toFixed(2);
       document.getElementById("fromCurrency").innerHTML = data['currency']['from_symbol'] + "1.00";
       document.getElementById("localTime").innerHTML = data['local_time'];
+      var lat = data['loc'][0].toString()
+      var lng = data['loc'][1].toString()
       var weatherJSON;
-      $.getJSON(data['weather'], function(weather){
+      $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=7986ad57675127ce999defef1beaa4dd", function(weather){
         console.log(weather)
         document.getElementById("weatherTemp").innerHTML = (weather['main']['temp'] - 273.15).toFixed(0) + "&#176;C";
         document.getElementById("weatherDesc").innerHTML = weather['weather'][0]['description'];

@@ -69,15 +69,12 @@ def api_id():
         "loc": post['loc'],
         "location_info": post['location_info']
     }
-    results["weather"]: = str("http://api.openweathermap.org/data/2.5/weather?lat=" + str(results['loc'][0]) + "&lon=" + str(results['loc'][1]) + "&APPID=7986ad57675127ce999defef1beaa4dd")
     try:
         user = json.loads(args['?ip'])
         user_country = user_db.country.find_one({'country_code': user['country_code'].lower()})
-        results['user_country'] = user_country
         user_currency_code = user_country['currency']['iso_code']
         loc_currency_code  = results['location_info']['currency']['iso_code']
         currency_db = user_db.currency.find_one()
-        results['currency_db'] = currency_db
         currency = {
             "conversion": round(currency_db['currency'][user_currency_code][loc_currency_code], 2),
             "from_html": user_country['currency']['html'],
