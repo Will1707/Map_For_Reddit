@@ -262,7 +262,7 @@
           <div class="selection">
             <button data-toggle="collapse" type="button" class="accordion">Minimum per Country</button>
             <div class="panel">
-              <input id="country" name="reddit_country" data-slider-id='countrySlider' type="text" data-slider-min="0" data-slider-max="150" data-slider-step="1" data-slider-value="10" data-slider-tooltip="show"/>
+              <input id="country" name="reddit_country" data-slider-id='countrySlider' type="text" data-slider-min="0" data-slider-max="150" data-slider-step="1" data-slider-value="100" data-slider-tooltip="show"/>
             </div>
           </div>
           <div class="selection">
@@ -422,7 +422,7 @@
             </div>
             <div id="locationInfo" style="display: none; margin-top: 1%; width: 100%; margin-left: 1%;">
               <div class="">
-                <h4 style="font-size: large; margin-top: 2%;" id="placeName"></h4>
+                <h4 style="margin-top: 2%;" id="placeName"></h4>
               </div>
               <div style="height: 20%; margin-top: 3%;" class="row">
                 <div style="text-align: center;" class="col-lg-4">
@@ -441,13 +441,13 @@
                   <h4 style="text-align: center; margin-top: -20px; font-size: x-large;">Local Time</h4>
                 </div>
               </div>
-              <div style="margin-top: 2%; font-size: large;">
+              <div style="margin-top: 10%; font-size: large;">
                 <h4>Closest Wikipedia Article</h4>
               </div>
-              <div style="margin-top: 1%;">
+              <div style="margin-top: 2%;">
                 <h1 style="font-size: large;" id="wiki_title"></h1>
               </div>
-              <div class="" style="padding-top: 20px;">
+              <div style="padding-top: 0.5%;">
                 <h5 style="font-size: medium;" id="wiki_extract"><h5>
                 <a style="font-size: small;" id="wikipedia" href='' target="_blank">Wikipedia</a>
               </div>
@@ -603,7 +603,7 @@
     }
 
     </script>
-    <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script src="{{url_for('static', filename='script1.js')}}"></script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCR6ne9XG6KkXA9TSTQEmdQApCl5m9rMjs&callback=initMap">
     </script>
