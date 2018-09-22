@@ -22,7 +22,7 @@ user_form = {
         'date_upper': 9999999999999,
         'date_lower': 0,
         'results': int(5000 * 1.5),
-        'num_country': 50,
+        'num_country': 150,
         'countries': countries
         }
 found = submission.find({"geoJSON.properties.comments": {"$gt": user_form['comments_lower'], "$lt": user_form['comments_upper']},
@@ -31,26 +31,29 @@ found = submission.find({"geoJSON.properties.comments": {"$gt": user_form['comme
                         "country": {"$in": user_form['countries']}}).limit(user_form['results']).sort("score", pymongo.DESCENDING)
 
 result = []
+result_append = result.append
 remainder = []
+remainder_append = remainder.append
 locations = []
-for loc in found:
-    if loc['country_rank'] <= user_form['num_country'] and loc['country_rank'] is not None and loc['geoJSON']['geometry']['coordinates'] not in locations:
-        result.append(loc['geoJSON'])
-        locations.append(loc['geoJSON']['geometry']['coordinates'])
-    else:
-        remainder.append(loc['geoJSON'])
-        locations.append(loc['geoJSON']['geometry']['coordinates'])
+locations_append = locations.append
 
+for loc in found:
+    coord = loc['geoJSON']['geometry']['coordinates']
+    if loc['country_rank'] is not None and loc['country_rank'] <= user_form['num_country'] and coord not in locations:
+        result_append(loc['geoJSON'])
+        locations_append(coord)
+    else:
+        remainder_append(loc['geoJSON'])
+        locations_append(coord)
+
+print(len(result))
 remaining = 5000 - len(result)
 
 if remaining > 0:
-    result = result + remainder[:remaining]
+    geoJSON_list = result + remainder[:remaining]
 elif remaining < 0:
-    result = result[:remaining]
-print(len(result))
+    geoJSON_list = result[:remaining]
 
-for geoJSON in result:
-    feature_collection_list.append(geoJSON)
-
-user_form['feature_collection'] = FeatureCollection(feature_collection_list)
+print(len(geoJSON_list))
+user_form['feature_collection'] = FeatureCollection(geoJSON_list)
 # data.insert_one(user_form)

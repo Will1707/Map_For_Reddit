@@ -32,8 +32,8 @@ def user_data(user_dict):
                         'D' + date_upper + 'd' + date_lower + 'J' + user_dict['countries_no'] +
                         'G' + user_dict['cluster'] + 'R' + user_dict['results'] + 'N' + user_dict['num_country'])
 
-    featurecollection = data.find({"id":user_dict['id']})
-    if featurecollection.count(with_limit_and_skip=True) == 0:
+    featurecollection = data.find_one({"id":user_dict['id']})
+    if featurecollection is None:
         user_form = {
                 'id': user_dict['id'],
                 'score_upper': int(user_dict['score_upper']),
@@ -51,39 +51,39 @@ def user_data(user_dict):
             found = submission.find({"geoJSON.properties.comments": {"$gt": user_form['comments_lower'], "$lt": user_form['comments_upper']},
                                     "geoJSON.properties.score": {"$gt": user_form['score_lower'], "$lt": user_form['score_upper']},
                                     "geoJSON.properties.date": {"$gt": user_form['date_lower'], "$lt": user_form['date_upper']},
-                                    "country": {"$in": user_form['countries']}}).sort("score", pymongo.DESCENDING)
+                                    "country": {"$in": user_form['countries']}}).limit(int(user_form['results'] * 1.5)).sort("score", pymongo.DESCENDING)
         else:
             cluster = 'cluster.level_' + str(user_form['cluster'])
             found = submission.find({"geoJSON.properties.comments": {"$gt": user_form['comments_lower'], "$lt": user_form['comments_upper']},
                                     "geoJSON.properties.score": {"$gt": user_form['score_lower'], "$lt": user_form['score_upper']},
                                     "geoJSON.properties.date": {"$gt": user_form['date_lower'], "$lt": user_form['date_upper']},
-                                    "country": {"$in": user_form['countries']}, cluster: True}).sort("score", pymongo.DESCENDING)
+                                    "country": {"$in": user_form['countries']}, cluster: True}).limit(int(user_form['results'] * 1.5)).sort("score", pymongo.DESCENDING)
 
         result = []
+        result_append = result.append
         remainder = []
+        remainder_append = remainder.append
+        locations = []
+        locations_append = locations.append
+
         for loc in found:
-            if loc['country_rank'] <= user_form['num_country'] and loc['country_rank'] is not None:
-                result.append(loc['geoJSON'])
+            coord = loc['geoJSON']['geometry']['coordinates']
+            if loc['country_rank'] is not None and loc['country_rank'] <= user_form['num_country'] and coord not in locations:
+                result_append(loc['geoJSON'])
+                locations_append(coord)
             else:
-                remainder.append(loc['geoJSON'])
+                remainder_append(loc['geoJSON'])
+                locations_append(coord)
 
         remaining = user_form['results'] - len(result)
         if remaining > 0:
-            result = result + remainder[:remaining]
+            geoJSON_list = result + remainder[:remaining]
         elif remaining < 0:
-            result = result[:remaining]
+            geoJSON_list = result[:remaining]
 
-        locations = []
-        for geoJSON in result:
-            if geoJSON['geometry']['coordinates'] not in locations:
-                locations.append(geoJSON['geometry']['coordinates'])
-                feature_collection_list.append(geoJSON)
-
-        user_form['feature_collection'] = FeatureCollection(feature_collection_list)
+        user_form['feature_collection'] = FeatureCollection(geoJSON_list)
         data.insert_one(user_form)
         return user_form['feature_collection']
 
     else:
-        for geoJSON in featurecollection:
-            user_geoJSON = geoJSON['feature_collection']
-        return user_geoJSON
+        return featurecollection['feature_collection']
