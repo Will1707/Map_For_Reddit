@@ -178,7 +178,7 @@ function getWikiExtract() {
     url: apiURL,
     dataType: "JSON", // data type expected from server
     success: function (data) {
-      document.getElementById("wiki_title").innerHTML = "Closest Wikipedia Article: " + data['title'];
+      document.getElementById("wiki_title").innerHTML = data['title'];
       document.getElementById("wiki_extract").innerHTML = data['extract'];
       document.getElementById("wikipedia").href = "https://en.wikipedia.org/wiki/" + data['title'];
       document.getElementById("placeName").innerHTML = data['location_info']['location_name'];

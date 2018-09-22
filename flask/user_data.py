@@ -83,7 +83,9 @@ def user_data(user_dict):
 
         user_form['feature_collection'] = FeatureCollection(geoJSON_list)
         data.insert_one(user_form)
+        client.close()
         return user_form['feature_collection']
 
     else:
+        client.close()
         return featurecollection['feature_collection']
