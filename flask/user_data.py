@@ -31,7 +31,7 @@ def user_data(user_dict):
                         'C' + user_dict['comments_upper'] + 'c' + user_dict['comments_lower'] +
                         'D' + date_upper + 'd' + date_lower + 'J' + user_dict['countries_no'] +
                         'G' + user_dict['cluster'] + 'R' + user_dict['results'] + 'N' + user_dict['num_country'])
-    print(user_dict['id'])
+
     featurecollection = data.find_one({"id":user_dict['id']})
     if featurecollection is None:
         user_form = {

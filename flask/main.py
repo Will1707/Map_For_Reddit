@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
+    dark = False
     countries = ['Afghanistan', 'Albania', 'Algeria', 'Angola', 'Anguilla', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'B&H', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Bermuda', 'Bhutan', 'Bolivia', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Chile', 'Colombia', 'Comoros', 'Congo-Brazzaville', 'Corn Islands', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czechia', 'D.R.', 'DR Congo', 'Denmark', 'Djibouti', 'Dominica', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Fiji', 'Finland', 'France', 'France, Polynésie française (eaux territoriales)', 'France, Terres australes et antarctiques françaises, Îles Kerguelen (eaux territoriales)', 'France, Terres australes et antarctiques françaises, Îles Saint-Paul et Nouvelle-Amsterdam - Île Saint-Paul (eaux territoriales)', 'France, Wallis-et-Futuna (eaux territoriales)', "Francis Joseph's Land", 'Gabon', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Grenada', 'Guatemala', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Lithuania', 'Luxembourg', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Mauritania', 'Mauritius', 'Metropolitan France', 'Mexico', 'Moldova', 'Mongolia', 'Montserrat', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nepal', 'New Zealand', 'Nicaragua', 'Nigeria', 'North Korea', 'Norway', 'Nouvelle-Calédonie, France, Îles Loyauté (eaux territoriales)', 'Oman', 'PRC', 'Pakistan', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'ROC', 'RSA', 'Romania', 'Russia', 'Rwanda', 'SBA', 'Saint Helena, Ascension and Tristan da Cunha', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Korea', 'South Sudan', 'Spain', 'Spain (territorial waters)', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria', 'São Tomé and Príncipe', 'Tajikistan', 'Tanzania', 'Territorial waters of Bornholm', 'Territorial waters of Greece - Gavdos and Gavdopoula', 'Territorial waters of Italy - Ustica', 'Thailand', 'The Bahamas', 'The Netherlands', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'USA', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States of America', 'United States of America (American Samoa)', 'United States of America (CNMI)', 'United States of America (Dry Tortugas territorial waters)', 'United States of America (Guam)', "United States of America (Island of Hawai'i territorial waters)", "United States of America (Kaua'i, Ni'ihau, Ka'ula)", "United States of America (Middle Hawai'ian Islands territorial waters)", 'United States of America (USVI Saint Croix)', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'eSwatini']
 
     if request.method == 'POST':
@@ -25,6 +26,8 @@ def hello_world():
         for i in imd_list:
             if 'reddit_countries' in i:
                     user_countries = i
+            elif 'reddit_dark' in i:
+                dark = True
         if user_countries is not None:
             for i in user_countries[1]:
                 selected_countries.append(countries[int(i)])
@@ -40,7 +43,10 @@ def hello_world():
         user_dict['countries'] = selected_countries
         user_dict['countries_no'] = "".join(countries_no)
         user_geoJSON = user_data(user_dict)
-        return render_template('home.html', geojson=json.dumps(user_geoJSON))
+        # if dark:
+        #     return render_template('darkHome.html', geojson=json.dumps(user_geoJSON))
+        return render_template('darkHome.html', geojson=json.dumps(user_geoJSON))
+
     client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
     data = client['geojson'].featurecollection
     featurecollection = data.find_one({"id":'S155000s10C3500c0D01012017d01012012JG0R5000N100'})
