@@ -160,26 +160,12 @@ function darkModeOn() {
     accordion[i].style.backgroundColor = "#393939";
   }
 }
-// function padNum(num) {
-//   if (num < 10) {
-//     num = "0" + num;
-//   }
-//   return num;
-// }
 
-// function localTime() {
-//   var offset = 8;
-//   var d = new Date((new Date().getTime())-offset*60*60*1000)
-//   var hours = d.getHours()
-//   var minutes = d.getMinutes()
-//   document.getElementById("localTime").innerHTML = padNum(hours) + ':' + padNum(minutes);
-// }
 var ip;
 // $.getJSON('https://api.ipstack.com/check?access_key=19c1afec565796258fa5b67088886265&format=1', function(data){
 $.getJSON('https://geoip.tools/v1/json', function(data){
   delete data.ip
   delete data.type
-  console.log(data)
   ip = JSON.stringify(data)
 });
 
@@ -192,8 +178,7 @@ function getWikiExtract() {
     url: apiURL,
     dataType: "JSON", // data type expected from server
     success: function (data) {
-      console.log(data)
-      document.getElementById("wiki_title").innerHTML = data['title'];
+      document.getElementById("wiki_title").innerHTML = "Closest Wikipedia Article: " + data['title'];
       document.getElementById("wiki_extract").innerHTML = data['extract'];
       document.getElementById("wikipedia").href = "https://en.wikipedia.org/wiki/" + data['title'];
       document.getElementById("placeName").innerHTML = data['location_info']['location_name'];
@@ -202,7 +187,6 @@ function getWikiExtract() {
       var lng = data['loc'][1].toString()
       var weatherJSON;
       $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=7986ad57675127ce999defef1beaa4dd", function(weather){
-        console.log(weather)
         document.getElementById("weatherTemp").innerHTML = (weather['main']['temp'] - 273.15).toFixed(0) + "&#176;C";
         document.getElementById("weatherDesc").innerHTML = weather['weather'][0]['description'];
       });
@@ -303,24 +287,6 @@ function getWikiExtract() {
   });
   }
 
-  // function getRedditUser() {
-  //   var apiURL = 'api/v0.1/reddit_id?id=' + document.getElementById("postScore").href.split("/")[5];
-  //   $.ajax({
-  //     type: 'GET',
-  //     url: apiURL,
-  //     dataType: "JSON", // data type expected from server
-  //     success: function (data) {
-  //
-  //     }},
-  //     error: function() {
-  //       data = null;
-  //       console.log('Error: ' + data);
-  //     }
-  //   });
-  //   }
-
-    //TO-DO --need to add global variable so on first ajax call all urls are saved so multiple api calls are not needed
-    //allow next button to cycle to next lot of images
     function insertHTML(data) {
       document.getElementById("modalRedditUser").innerHTML      = data['reddit_user'];
       var redditLink     = "https://www.reddit.com/";

@@ -84,6 +84,6 @@ def user_data(user_dict):
         return user_form['feature_collection']
 
     else:
-        # for post in found:
-        #     user_geoJSON = post['feature_collection']
-        return 2
+        for post in found:
+            user_geoJSON = post['feature_collection']
+        return user_geoJSON
