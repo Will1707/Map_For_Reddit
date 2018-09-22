@@ -59,7 +59,6 @@ def user_data(user_dict):
                                     "geoJSON.properties.date": {"$gt": user_form['date_lower'], "$lt": user_form['date_upper']},
                                     "country": {"$in": user_form['countries']}, cluster: True}).sort("score", pymongo.DESCENDING)
 
-        print(found.count(with_limit_and_skip=True))
         result = []
         remainder = []
         for loc in found:
@@ -67,10 +66,6 @@ def user_data(user_dict):
                 result.append(loc['geoJSON'])
             else:
                 remainder.append(loc['geoJSON'])
-
-        # print(user_form['results'])
-        # print("result:" + str(len(result)))
-        # print("remainder:" + str(len(remainder)))
 
         remaining = user_form['results'] - len(result)
         if remaining > 0:

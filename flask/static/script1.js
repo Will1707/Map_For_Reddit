@@ -209,7 +209,7 @@ function getWikiExtract() {
       document.getElementById("toCurrency").innerHTML = data['currency']['to_symbol'] + data['currency']['conversion'].toFixed(2);
       document.getElementById("fromCurrency").innerHTML = data['currency']['from_symbol'] + "1.00";
       document.getElementById("modalRedditUser").innerHTML      = data['reddit_user'];
-      var redditLink     = "https://www.reddit.com/";
+      var redditLink     = "https://old.reddit.com/";
 
       document.getElementById("modalImageTitleLink").innerHTML      = data['reddit_title'];
       document.getElementById("modalImageImage").src                = data['reddit_image'];
@@ -218,11 +218,11 @@ function getWikiExtract() {
       document.getElementById("modalImageScoreLink").innerHTML      = data['reddit_score']    + ' points';
       document.getElementById("modalImageCommentsLink").innerHTML   = data['reddit_comments'] + ' comments';
 
-      document.getElementById("modalImageTitleLink").href       = redditLink + 'r/earthporn/' + data['id'];
+      document.getElementById("modalImageTitleLink").href       = redditLink + 'r/earthporn/comments/' + data['id'];
       document.getElementById("modalImageSubLink").href         = redditLink + 'r/'           + data['subreddit'];
       document.getElementById("modalImageUserLink").href        = redditLink + 'user/'        + data['reddit_user'];
-      document.getElementById("modalImageScoreLink").href       = redditLink + 'r/earthporn/' + data['id'];
-      document.getElementById("modalImageCommentsLink").href    = redditLink + 'r/earthporn/' + data['id'];
+      document.getElementById("modalImageScoreLink").href       = redditLink + 'r/earthporn/comments/' + data['id'];
+      document.getElementById("modalImageCommentsLink").href    = redditLink + 'r/earthporn/comments/' + data['id'];
 
       for (i=1; i < 4; i++){
         var image           = "modalMiniImage" + i;

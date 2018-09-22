@@ -201,11 +201,20 @@ i {
 }
 
 .modalBottomImbed {
-      margin-top: 43px;
+      margin-top: 41px;
 }
 
 .embedlink {
       color: #000000;
+}
+
+.embedInfo {
+  color: #A5A4A4;
+  font-size: 12px;
+}
+
+.embedLi {
+    font-size: 19px;
 }
 
 .toptabslink{
@@ -280,7 +289,7 @@ i {
       float: left;
       font-size: 14px;
       text-indent: -10px;
-      margin-top: -4px;
+      margin-top: -9px;
       color: #A5A4A4;
 }
 
@@ -291,7 +300,7 @@ i {
       margin-left: 30px;
       font-size: 14px;
       text-indent: -10px;
-      margin-top: -4px;
+      margin-top: -9px;
       color: #A5A4A4;
 }
 
