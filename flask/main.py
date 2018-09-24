@@ -48,6 +48,7 @@ def hello_world():
         return render_template('darkHome.html', geojson=json.dumps(user_geoJSON))
 
     client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
+    # client = MongoClient('localhost', 27017)
     data = client['geojson'].featurecollection
     featurecollection = data.find_one({"id":'S155000s10C3500c0D01012017d01012012JG0R5000N100'})
     client.close()
@@ -55,19 +56,24 @@ def hello_world():
 
 @app.route('/api/v0.1/reddit_id', methods=['GET'])
 def api_id():
-    client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
-    # client = MongoClient('localhost', 27017)
+    # client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
+    client = MongoClient('localhost', 27017)
     db = client['earthporn']
     submissions = db.location
     user_db = client['location']
     args = request.args.to_dict()
     find = 'user_posts.' + args['id'] + '.id'
     post = submissions.find_one({find: args['id']})
+    url = post['user_posts'][args['id']]['url']
+    if "imgur" in url and url[-4:].lower() != '.jpg' and url[-4:].lower() != '.png':
+        image = f'{url}.jpg'
+    else:
+        image = url
     results = {
         "extract": post['wiki_extract'],
         "title": post['wiki_title'],
         "reddit_title": post['user_posts'][args['id']]['title'],
-        "reddit_image": post['user_posts'][args['id']]['url'],
+        "reddit_image": image,
         "reddit_score": post['user_posts'][args['id']]['score'],
         "reddit_user": post['user_posts'][args['id']]['author'],
         "reddit_comments": post['user_posts'][args['id']]['num_comments'],

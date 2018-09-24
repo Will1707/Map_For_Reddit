@@ -238,13 +238,13 @@
           <div class="selection">
             <button data-toggle="collapse" type="button" class="accordion">Score</button>
             <div class="panel">
-              <input id="score" name="reddit_score" type="text" class="span2" value="" data-slider-min="10" data-slider-max="155000" data-slider-step="1" data-slider-value="[10,155000]" data-slider-tooltip="show"/>
+              <input id="score" name="reddit_score" type="text" class="span2" value="" data-slider-min="5" data-slider-max="155000" data-slider-step="1" data-slider-value="[1000,155000]" data-slider-tooltip="show"/>
             </div>
           </div>
           <div class="selection">
             <button data-toggle="collapse" type="button" class="accordion">Comments</button>
             <div class="panel">
-              <input id="comments" name="reddit_comments" type="text" class="span2" value="" data-slider-min="0" data-slider-max="10000" data-slider-step="5" data-slider-value="[0,10000]" data-slider-tooltip="show"/>
+              <input id="comments" name="reddit_comments" type="text" class="span2" value="" data-slider-min="0" data-slider-max="10000" data-slider-step="1" data-slider-value="[10,10000]" data-slider-tooltip="show"/>
             </div>
           </div>
           <div class="selection">
@@ -268,7 +268,7 @@
           <div class="selection">
             <button data-toggle="collapse" type="button" class="accordion">Date Range</button>
             <div class="panel">
-              <input type="text" name="daterange" value="01/01/2012 - 01/01/2017" />
+              <input type="text" name="daterange" value="02/14/2011 - 01/01/2018" />
               <div id="reportrange" name="report_range" type="text" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
                   <i class="fa fa-calendar"></i>&nbsp;
                   <span></span> <i class="fa fa-caret-down"></i>
@@ -291,8 +291,8 @@
       </form>
     </div>
     <div class="openclose" id="openclose">
-      <p id="rightArrow" onclick="closeNav()"><i class="arrow right"></i></p>
-      <p id="leftArrow" onclick="closeNav()"><i class="arrow left"></i></p>
+      <p id="rightArrow" onclick="closeNav()"><i class="arrow rightArrows"></i></p>
+      <p id="leftArrow" onclick="closeNav()"><i class="arrow leftArrows"></i></p>
     </div>
     <div id="mapbox">
       <div id="map"></div>
@@ -415,7 +415,7 @@
                     </div>
                   </div>
                   <div style="margin-top: auto; margin-bottom: auto;" id="modalmini4">
-                    <p><i class="arrow right"></i></p>
+                    <p onclick="nextImages()"><i class="arrow rightArrows"></i></p>
                   </div>
                 </div>
               </div>
@@ -508,13 +508,13 @@
         google.maps.event.addListener(marker, 'click', function(){
             infowindow.close();
             infowindow.setContent("<div class='infowindow_body' style='box-sizing: border-box; color: black;'>" +
-                                  "<p><a style='text-decoration:none; color: black;' href='https://www.reddit.com/r/earthporn/" + loc['id'] + "'><div style='text-align: center; font-weight: bold; font-size: 16px;'>"  +
+                                  "<p><a style='text-decoration:none; color: black;' href='https://old.reddit.com/r/earthporn/" + loc['id'] + "'><div style='text-align: center; font-weight: bold; font-size: 16px;'>"  +
                                   loc['properties']['title'] + "</p></div></a> <div style='float:center'><img src='" + loc['properties']['image_link'] + "' style='max-width: 250px;'></div>" +
-                                  "<div style='margin-top: 8px;'><p><a style='text-decoration:none; color: black; position: relative;' target='_blank' href='https://www.reddit.com/r/earthporn'> r/EarthPorn </a>" +
-                                  "<a style='text-decoration:none; color: black; float: right;' target='_blank' href='https://www.reddit.com/u/" + loc['properties']['username'] + "'>" + loc['properties']['username'] + "</a></p></div>" +
-                                  "<div style='margin-top: -10px;'><p><a style='text-decoration:none; color: black;' target='_blank' id='postScore' href='https://www.reddit.com/r/earthporn/" + loc['id'] + "'>" +
-                                  loc['properties']['score'] + " points" + "</a><a style='text-decoration:none; color: black; float: right;' target='_blank' href='https://www.reddit.com/r/earthporn/" + loc['id'] + "'>" + loc['properties']['comments'] + " comments" + "</a></p></div></div>" +
-                                  "<div style='margin-top: -10px; '><p><a data-toggle='modal' data-target='#reportModal' style='text-decoration: underline; color: black; float: left;' target='_blank'> Report </a><a data-toggle='modal' data-target='#exampleModal' onclick='locationSelected(), getPieChart(), getWikiExtract(), getRedditUser()'' style='text-decoration: underline; color: black; float: right;' target='_blank'> More </a></p></div>"
+                                  "<div style='margin-top: 8px;'><p><a style='text-decoration:none; color: black; position: relative;' target='_blank' href='https://old.reddit.com/r/earthporn'> r/EarthPorn </a>" +
+                                  "<a style='text-decoration:none; color: black; float: right;' target='_blank' href='https://old.reddit.com/u/" + loc['properties']['username'] + "'>" + loc['properties']['username'] + "</a></p></div>" +
+                                  "<div style='margin-top: -10px;'><p><a style='text-decoration:none; color: black;' target='_blank' id='postScore' href='https://old.reddit.com/r/earthporn/comments/" + loc['id'] + "'>" +
+                                  loc['properties']['score'] + " points" + "</a><a style='text-decoration:none; color: black; float: right;' target='_blank' href='https://old.reddit.com/r/earthporn/comments/" + loc['id'] + "'>" + loc['properties']['comments'] + " comments" + "</a></p></div></div>" +
+                                  "<div style='margin-top: -10px; '><p><a data-toggle='modal' data-target='#reportModal' style='text-decoration: underline; color: black; float: left;' target='_blank'> Report </a><a data-toggle='modal' data-target='#exampleModal' onclick='locationSelected(), getPieChart(), getWikiExtract()'' style='text-decoration: underline; color: black; float: right;' target='_blank'> More </a></p></div>"
                                 );
 
             infowindow.setOptions({maxWidth:250});
@@ -529,12 +529,9 @@
     }
 
     </script>
-    <script src="{{url_for('static', filename='script1.js')}}"></script>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCR6ne9XG6KkXA9TSTQEmdQApCl5m9rMjs&callback=initMap">
     </script>
-    <!-- <div>
-        <div id="map"></div>
-    </div> -->
 </body>
 </html>

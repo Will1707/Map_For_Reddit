@@ -133,12 +133,12 @@ i {
     padding: 8px;
 }
 
-.right {
+.rightArrows {
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
 }
 
-.left {
+.leftArrows {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
 }
