@@ -197,10 +197,10 @@ function getWikiExtract() {
             }
       };
 
-      for (i=1; i < maxLength; i++){
+      for (i=1; i < maxLength; i++) {
 
-        var modalmini = "modalmini" + i;
-        var image     = "modalMiniImage" + i;
+        var modalmini      = "modalmini" + i;
+        var image          = "modalMiniImage" + i;
         var subLink        = "modalMiniLinkSub" + i;
         var userLink       = "modalMiniLinkUser" + i;
         var scoreLink      = "modalMiniLinkScore" + i;
@@ -208,7 +208,12 @@ function getWikiExtract() {
 
         document.getElementById(modalmini).style.display  = "block";
 
-        document.getElementById(image).src                = data['other_posts'][subreddit][i - 1]['url'];
+        var thumb_image = data['other_posts'][subreddit][i - 1]['url']
+        if (thumb_image.includes("imgur") && !thumb_image.includes(".jpg") && !thumb_image.includes(".png")) {
+          thumb_image = thumb_image + "m.jpg"
+        }
+
+        document.getElementById(image).src                = thumb_image;
         document.getElementById(subLink).innerHTML        = 'r/' + data['other_posts'][subreddit][i - 1]['subreddit'];
         document.getElementById(userLink).innerHTML       = data['reddit_user'];
         document.getElementById(scoreLink).innerHTML      = data['other_posts'][subreddit][i - 1]['score']    + ' points';
@@ -254,7 +259,7 @@ function getWikiExtract() {
         if (thumb_image.includes("imgur") && !thumb_image.includes(".jpg") && !thumb_image.includes(".png")) {
           thumb_image = thumb_image + "m.jpg"
         }
-        console.log(thumb_image)
+
         document.getElementById(image).src                = otherPosts[i - 1]['url'] + "m.jpg";
         document.getElementById(subLink).innerHTML        = 'r/' + otherPosts[i - 1]['subreddit'];
         document.getElementById(userLink).innerHTML       = document.getElementById("modalImageUserLink").innerHTML;

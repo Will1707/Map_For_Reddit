@@ -162,7 +162,11 @@ i {
 }
 
 .modalMiniImage{
-      max-height: 102%;
+      max-height: 100%;
+      max-width: 95%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
 }
 
 .modalMiniImageUser {
