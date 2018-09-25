@@ -284,9 +284,6 @@
             <div style="margin-left: 50%; margin-top: 10%;">
               <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-          <div style="font-size: small; margin-top: 20%; color: black;" class="">
-            Tip: Press more on the info window
-          </div>
         </div>
       </form>
     </div>
@@ -514,7 +511,7 @@
                                   "<a style='text-decoration:none; color: black; float: right;' target='_blank' href='https://old.reddit.com/u/" + loc['properties']['username'] + "'>" + loc['properties']['username'] + "</a></p></div>" +
                                   "<div style='margin-top: -10px;'><p><a style='text-decoration:none; color: black;' target='_blank' id='postScore' href='https://old.reddit.com/r/earthporn/comments/" + loc['id'] + "'>" +
                                   loc['properties']['score'] + " points" + "</a><a style='text-decoration:none; color: black; float: right;' target='_blank' href='https://old.reddit.com/r/earthporn/comments/" + loc['id'] + "'>" + loc['properties']['comments'] + " comments" + "</a></p></div></div>" +
-                                  "<div style='margin-top: -10px; '><p><a data-toggle='modal' data-target='#reportModal' style='text-decoration: underline; color: black; float: left;' target='_blank'> Report </a><a data-toggle='modal' data-target='#exampleModal' onclick='locationSelected(), getPieChart(), getWikiExtract()'' style='text-decoration: underline; color: black; float: right;' target='_blank'> More </a></p></div>"
+                                  "<div style='margin-top: -10px; '><p><a data-toggle='modal' data-target='#reportModal' style='text-decoration: underline; color: black; float: left;' target='_blank'> Report </a><a data-toggle='modal' data-target='#exampleModal' onclick='locationSelected(), getPieChart(), getWikiExtract()'' style='text-decoration: underline; color: red; float: right;' target='_blank'> Click me! </a></p></div>"
                                 );
 
             infowindow.setOptions({maxWidth:250});

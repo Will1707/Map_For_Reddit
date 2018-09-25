@@ -45,7 +45,7 @@ def hello_world():
         user_geoJSON = user_data(user_dict)
         # if dark:
         #     return render_template('darkHome.html', geojson=json.dumps(user_geoJSON))
-        return render_template('darkHome.html', geojson=json.dumps(user_geoJSON))
+        return render_template('home.html', geojson=json.dumps(user_geoJSON))
 
     client = MongoClient('mongodb://will1:iJzubpOyHD1357Aq@mapforredditdb-shard-00-00-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-01-j48a5.gcp.mongodb.net:27017,mapforredditdb-shard-00-02-j48a5.gcp.mongodb.net:27017/test?ssl=true&replicaSet=mapforredditDB-shard-0&authSource=admin&retryWrites=true')
     # client = MongoClient('localhost', 27017)
